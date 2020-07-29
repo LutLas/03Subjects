@@ -56,7 +56,7 @@ fun main(args: Array<String>) {
     }*/
 
     // 1
-    exampleOf("BehaviorSubject") {
+    /*exampleOf("BehaviorSubject") {
         // 2
         val subscriptions = CompositeDisposable()
         // 3
@@ -65,12 +65,45 @@ fun main(args: Array<String>) {
         val subscriptionOne = behaviorSubject
                 .doOnDispose { println("DisposedOne") }
                 .doOnComplete { println("CompletedOne") }
+                .doOnError { println("ErrorOne Occurred: $it") }
                 .doOnSubscribe { println("SubscribedOne: $it") }
                 .subscribeBy(
                 onNext = { printWithLabel("1)", it) },
                 onError = { printWithLabel("1)", it) }
         )
+        // 1
+        behaviorSubject.onError(RuntimeException("Error!"))
+// 2
+        subscriptions.add(
+                behaviorSubject.subscribeBy(
+                onNext = { printWithLabel("2)", it) },
+                onError = { printWithLabel("2)", it) }
+                )
+        )
         subscriptions.add(subscriptionOne)
         subscriptions.dispose()
-    }
+    }*/
+
+    /*exampleOf("BehaviorSubject State") {
+
+        val subscriptions = CompositeDisposable()
+
+        val behaviorSubject = BehaviorSubject.createDefault(0)
+
+        println(behaviorSubject.value)
+
+        // 1
+        subscriptions.add(behaviorSubject.subscribeBy {
+            printWithLabel("1)", it)
+        })
+
+// 2
+        behaviorSubject.onNext(1)
+// 3
+        println(behaviorSubject.value)
+// 4
+        subscriptions.dispose()
+    }*/
+
+    
 }
